@@ -8,11 +8,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 
 For the full list of settings and their values, see
 """
-
+from django.urls import path, include
+from datetime import timedelta
 from pathlib import Path
 import rest_framework_swagger
-from datetime import timedelta
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,6 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'django-insecure-lf01#53kj9##3zh!ri1od1iz0lang8$*lx2s7nss!&!@8e*3dl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangoproject.apps.djangoprojectConfig'
 ]
 
 MIDDLEWARE = [
@@ -53,15 +54,19 @@ ROOT_URLCONF = 'djangoproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': []
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            }
         },
     },
 ]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from JangoAPI.models import Gusers, Gadjets
-from JangoAPI.forms import ResponseGraphic
+from djangoproject.models import Gusers, Gadjets
+from djangoproject.forms import ResponseGraphic
 from rest_framework.serializers import Serializer, CharField
 
 class GusersSerialazer(serializers.ModelSerializer):
