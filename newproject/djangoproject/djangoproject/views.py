@@ -61,7 +61,7 @@ class LoadUploadingFolder(APIView):
     permission_classes = [IsAuthenticated]
     def get (self, request):
         idSr = request.data['id']
-        requestF = Uploading.objects.filter(folder=idSr).order_by('device_type')
+        requestF = Uploading.objects.filter(folder=idSr).order_by('type')
         return Response(GadjetFolderSerialazer(requestF, many=True).data)
 class AddNewUploanding(APIView):
     permission_classes = [IsAuthenticated]
