@@ -5,11 +5,12 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer
+from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer
 from rest_framework import generics, viewsets, request, status
-from .models import Gusers, Gadgets
+from .models import Gusers, Gadgets, Uploading
 from djangoproject import newGadjets
 import json
+import uuid as id
 
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
