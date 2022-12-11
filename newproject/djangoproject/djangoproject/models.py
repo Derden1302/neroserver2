@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -115,20 +117,20 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Gadjets(models.Model):
-    id = models.TextField(primary_key=True)
-    folder = models.TextField(blank=True, null=True)
+class Gadgets(models.Model):
+    id = models.CharField(primary_key=True, max_length=14)
+    folder = models.CharField(max_length=14, blank=True, null=True)
     title = models.TextField(blank=True, null=True)
     gadjets = models.TextField(blank=True, null=True)
     mac = models.TextField(blank=True, null=True)
     device_type = models.TextField(blank=True, null=True)
     last_event = models.TextField(blank=True, null=True)
-    functions = models.TextField(blank=True, null=True)
+    functions = models.TextField(blank=True, null=True)  # This field type is a guess.
     device_script = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'gadjets'
+        db_table = 'gadgets'
 
 
 class Gusers(models.Model):
@@ -176,10 +178,9 @@ class IndataEvent(models.Model):
 
 
 class Notifications(models.Model):
-    folder = models.TextField(blank=True, null=True)
     title = models.TextField(blank=True, null=True)
-    message = models.TextField(blank=True, null=True)
-    error_icon = models.TextField(blank=True, null=True)
+    message = models.TextField(blank=True, null=True)  # This field type is a guess.
+    type_of_message = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
         managed = False
@@ -208,3 +209,20 @@ class OutdataEvent(models.Model):
     class Meta:
         managed = False
         db_table = 'outdata_event'
+
+
+class Uploading(models.Model):
+    title = models.TextField(blank=True, null=True)
+    scenarios = models.TextField(blank=True, null=True)  # This field type is a guess.
+    period = models.IntegerField(blank=True, null=True)
+    range = models.IntegerField(blank=True, null=True)
+    type_of_unloading = models.TextField(blank=True, null=True)
+    devices_in_progress = models.TextField(blank=True, null=True)  # This field type is a guess.
+    type_values = models.CharField(max_length=20, blank=True, null=True)
+    type = models.CharField(max_length=20, blank=True, null=True)
+    id = models.UUIDField(primary_key=True)
+    folder = models.UUIDField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'uploading'
