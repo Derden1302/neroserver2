@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer
 from rest_framework import generics, viewsets, request, status
-from .models import Gusers, Gadjets
+from .models import Gusers, Gadgets
 from djangoproject import newGadjets
 import json
 

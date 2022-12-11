@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from djangoproject.models import Gusers, Gadjets
+from djangoproject.models import Gusers, Gadgets
 from djangoproject.forms import ResponseGraphic
 from rest_framework.serializers import Serializer, CharField
 
