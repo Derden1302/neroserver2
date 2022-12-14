@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1"]
 # Application definition
 INSTALLED_APPS = [
+'corsheaders',
     'rest_framework',
     'rest_framework_swagger',
     'django.contrib.admin',
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'djangoproject.urls'
@@ -160,3 +162,21 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+CORS_ALLOWED_ORIGINS = [
+"https://domain.com",
+"https://api.domain.com",
+"http://localhost:8080",
+"http://127.0.0.1:9000"
+]
+CORS_ALLOW_METHODS = [
+'GET',
+'POST'
+]
+CORS_ALLOW_HEADERS = [
+    'Authorization',
+'accept',
+'accept-encoding',
+'authorization',
+'content-type'
+]

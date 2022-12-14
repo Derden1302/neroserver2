@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer
+from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer,  UploadingFolderSerialazer
 from rest_framework import generics, viewsets, request, status
 from .models import Gusers, Gadgets, Uploading
 from djangoproject import newGadjets
@@ -23,7 +23,7 @@ class AddNewGadget(APIView):
         return Response(status=200)
 class LoadGadgetApiInfo(APIView):
     permission_classes = [IsAuthenticated]
-    def post(self, request):
+    def get(self, request):
         idSr = request.data['id']
         requestF = Gadgets.objects.get(id=idSr)
         return Response(GadjetSerialazer(requestF, many=False).data)
@@ -53,7 +53,7 @@ class LoadGadgetFolder(APIView):
         return Response(GadjetFolderSerialazer(requestF, many=True).data)
 class LoadUploadingApiInfo(APIView):
     permission_classes = [IsAuthenticated]
-    def post(self, request):
+    def get(self, request):
         idSr = request.data['id']
         requestF = Uploading.objects.get(id=idSr)
         return Response(UploadingSerialazer(requestF, many=False).data)
