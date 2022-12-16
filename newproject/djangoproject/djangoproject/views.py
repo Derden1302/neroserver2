@@ -9,9 +9,9 @@ from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerialize
 from rest_framework import generics, viewsets, request, status
 from .models import Gusers, Gadgets, Uploading
 from djangoproject import newGadjets
+from django.http import HttpResponse as http
 import json
 import uuid as id
-
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
@@ -22,9 +22,8 @@ class AddNewGadget(APIView):
 
         return Response(status=200)
 class LoadGadgetApiInfo(APIView):
-    permission_classes = [IsAuthenticated]
     def get(self, request):
-        idSr = request.data['id']
+        idSr = request.GET.get('id')
         requestF = Gadgets.objects.get(id=idSr)
         return Response(GadjetSerialazer(requestF, many=False).data)
 class AutenficationAPI(APIView):
@@ -48,21 +47,21 @@ class LoadGraphic(APIView):
 class LoadGadgetFolder(APIView):
     permission_classes = [IsAuthenticated]
     def get (self, request):
-        idSr = request.data['id']
+        idSr = request.GET.get('id')
         requestF = Gadgets.objects.filter(folder=idSr).order_by('device_type')
         return Response(GadjetFolderSerialazer(requestF, many=True).data)
 class LoadUploadingApiInfo(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        idSr = request.data['id']
+        idSr = request.data.get('id')
         requestF = Uploading.objects.get(id=idSr)
         return Response(UploadingSerialazer(requestF, many=False).data)
 class LoadUploadingFolder(APIView):
     permission_classes = [IsAuthenticated]
     def get (self, request):
-        idSr = request.data['id']
+        idSr = request.GET.get('id')
         requestF = Uploading.objects.filter(folder=idSr).order_by('type')
-        return Response(GadjetFolderSerialazer(requestF, many=True).data)
+        return Response(UploadingFolderSerialazer(requestF, many=True).data)
 class AddNewUploanding(APIView):
     permission_classes = [IsAuthenticated]
     def post (self,request):
@@ -76,3 +75,4 @@ class AddNewUploanding(APIView):
         range = request.data['range'],
         period = request.data['period'],id =id.uuid4())
         return Response(status=200)
+
