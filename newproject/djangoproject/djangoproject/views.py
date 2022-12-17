@@ -7,19 +7,23 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer,  UploadingFolderSerialazer
 from rest_framework import generics, viewsets, request, status
-from .models import Gusers, Gadgets, Uploading
+from .models import Gusers, Gadgets, Uploading,Indata
 from djangoproject import newGadjets
 from django.http import HttpResponse as http
-import json
+import datetime as datetime
+from django.db.models import Avg
+import numpy as np
 import uuid as id
+from datetime import datetime, timedelta, time
+import json
+
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-        serializer = ResponseApiNewSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        #######отправить на сервер данные которые он попытается обработать #########
-
+        Uploading.objects.create(title=request.data['title'],
+                                 folder=request.data['folder'],
+                                 MAC = request.data['MAC'],
+                                 device_type=request.data['device_type'], id=id.uuid4())
         return Response(status=200)
 class LoadGadgetApiInfo(APIView):
     def get(self, request):
@@ -37,13 +41,51 @@ class AutenficationAPI(APIView):
             'auth': str(request.auth),  # None
         }
         return Response(content)
+
+periodD = { 1 : 60, 2 : 30, 3:1440}
+rangeD={24 : 1 ,3 : 3,7 : 7}
 class LoadGraphic(APIView):
     def post(self, request):
         serializer =  ResponseGraphicSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        requestJ=json.dumps(request.data)
-        #####- отправить данные в ввисде массива и отправить данные и присвоить значение тут
-        return Response({"status": "200"})
+        graphicview = request.data['graphicview']
+        items = request.data['items']
+        type = request.data['type']
+        range_date = rangeD[request.data['range']]
+        period = periodD[request.data['period']]
+        start_date = datetime.today() - timedelta(days=range_date)
+        end_date = datetime.today()
+        ResponseGrafic=[]
+        WATTarrA, WATTarrV=[], []
+        requestP = Indata.objects.filter( time_zone__range=[start_date, end_date])
+        for i in range(0, (end_date-start_date).days*1440, period ):
+            end_date =  start_date + timedelta(minutes=period)
+            requestC = requestP.filter(time_zone__range=[start_date, end_date])
+            if type == 'AMPER':
+                start_date = end_date
+                ResponseGrafic.extend((requestC.aggregate(Avg('amperage')).values()))
+
+            elif type == 'VOLTAGE':
+                start_date = end_date
+                ResponseGrafic.extend((requestC.aggregate(Avg('voltage')).values()))
+            elif type == 'WATT':
+                start_date = end_date
+
+                WATTarrA.extend((requestC.aggregate(Avg('amperage')).values()))
+                WATTarrV.extend((requestC.aggregate(Avg('voltage')).values()))
+
+                #ResponseGrafic = a*b
+        if type == 'WATT':
+            print(WATTarrA, "\n 222", WATTarrV)
+            for i in range(0,len( WATTarrV)):
+                if WATTarrV[i]!=None or WATTarrA[i]!=None:
+                    ResponseGrafic.append(WATTarrV[i]*WATTarrA[i])
+
+        return Response(ResponseGrafic)
+    def serrialize(self, title):
+
+        return
+
 class LoadGadgetFolder(APIView):
     permission_classes = [IsAuthenticated]
     def get (self, request):

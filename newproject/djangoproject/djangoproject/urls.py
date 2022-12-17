@@ -10,17 +10,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('swagger/',schema_view),
 
-    path('gadget/GadgetInfo/', LoadGadgetApiInfo.as_view()),
+    path('gadget/GadgetInfo/', LoadGadgetApiInfo.as_view()), #get
     path('gadget/AddGadjet/', AddNewGadget.as_view()),
-    path('gadget/GadgetFolder/', LoadGadgetFolder.as_view()),
+    path('gadget/GadgetFolder/', LoadGadgetFolder.as_view()), #get
 
     path('uploading/LoadGraphic/', LoadGraphic.as_view()),
     path('uploading/AddNewUploading/', AddNewUploanding.as_view()),
-    path('uploading/UploadingFolder/', LoadUploadingFolder.as_view()),
-    path('uploading/UploadingInfo/', LoadUploadingApiInfo.as_view()),
+    path('uploading/UploadingFolder/', LoadUploadingFolder.as_view()), #get
+    path('uploading/UploadingInfo/', LoadUploadingApiInfo.as_view()), #get
 
     path('signin/', TokenObtainPairView.as_view(), name='token_obtain_pair'),   ###
     path('getAccessToken/', TokenRefreshView.as_view(), name='token_refresh'),  ###
     path("logout/", LogoutView.as_view(), name="logout")
-
 ]

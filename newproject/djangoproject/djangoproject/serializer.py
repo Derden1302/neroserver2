@@ -1,9 +1,23 @@
 from rest_framework import serializers
-from djangoproject.models import Gusers, Gadgets, Uploading
+from djangoproject.models import Gusers, Gadgets, Uploading, Indata
 from djangoproject.forms import ResponseGraphic
 from rest_framework.serializers import Serializer, CharField
 
 import uuid as id
+
+class GraphicSerialazer(serializers.ModelSerializer):
+    class Meta:
+        model = Indata
+        fields = '__all__'
+class AMPERSerialazer(serializers.ModelSerializer):
+    class Meta:
+        model = Indata
+        fields = ('amperage', 'time_zone', 'pconid')
+class VOLTAGESerialazer(serializers.ModelSerializer):
+    class Meta:
+        model = Indata
+        fields = ('voltage', 'time_zone')
+
 class GusersSerialazer(serializers.ModelSerializer):
     class Meta:
         model = Gusers

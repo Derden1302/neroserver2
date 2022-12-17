@@ -148,14 +148,15 @@ class Gusers(models.Model):
 
 
 class Indata(models.Model):
-    taskid = models.AutoField(primary_key=True)
-    userid = models.IntegerField()
-    pconid = models.IntegerField()
     voltage = models.FloatField(blank=True, null=True)
     amperage = models.FloatField(blank=True, null=True)
     systematwork = models.BooleanField(blank=True, null=True)
     systemerror = models.IntegerField(blank=True, null=True)
     switchinfo = models.BooleanField(blank=True, null=True)
+    time_zone = models.DateTimeField(blank=True, null=True)
+    taskid = models.AutoField(primary_key=True)
+    userid = models.IntegerField(blank=True, null=True)
+    pconid = models.ForeignKey(Gadgets, models.DO_NOTHING, db_column='pconid', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -226,3 +227,7 @@ class Uploading(models.Model):
     class Meta:
         managed = False
         db_table = 'uploading'
+
+
+
+
