@@ -9,10 +9,8 @@ from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerialize
 from rest_framework import generics, viewsets, request, status
 from .models import Gusers, Gadgets, Uploading,Indata
 from djangoproject import newGadjets
-from django.http import HttpResponse as http
 import datetime as datetime
 from django.db.models import Avg
-import numpy as np
 import uuid as id
 from datetime import datetime, timedelta, time
 import json
@@ -20,7 +18,7 @@ import json
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-        Uploading.objects.create(title=request.data['title'],
+        Gusers.objects.create(title=request.data['title'],
                                  folder=request.data['folder'],
                                  MAC = request.data['MAC'],
                                  device_type=request.data['device_type'], id=id.uuid4())
@@ -44,7 +42,7 @@ class AutenficationAPI(APIView):
 
 periodD = { 1 : 60, 2 : 30, 3:1440}
 rangeD={24 : 1 ,3 : 3,7 : 7}
-class LoadGraphic(APIView):
+class LoadLineGraphic(APIView):
     def post(self, request):
         serializer =  ResponseGraphicSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -73,7 +71,6 @@ class LoadGraphic(APIView):
 
                 WATTarrA.extend((requestC.aggregate(Avg('amperage')).values()))
                 WATTarrV.extend((requestC.aggregate(Avg('voltage')).values()))
-
                 #ResponseGrafic = a*b
         if type == 'WATT':
             print(WATTarrA, "\n 222", WATTarrV)
@@ -117,4 +114,5 @@ class AddNewUploanding(APIView):
         range = request.data['range'],
         period = request.data['period'],id =id.uuid4())
         return Response(status=200)
+
 
