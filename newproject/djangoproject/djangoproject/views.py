@@ -14,8 +14,9 @@ class AddNewGadget(APIView):
     def post(self, request):
         Gadgets.objects.create(title=request.data['title'],
                                  folder=request.data['folder'],
-                                 MAC = request.data['MAC'],
-                                 device_type=request.data['device_type'], id=id.uuid4())
+                                 mac = request.data['MAC'],
+                                 device_type=request.data['device_type'],
+                               id=id.uuid4())
         return Response(status=200)
 class LoadGadgetApiInfo(APIView):
     permission_classes = [IsAuthenticated]
