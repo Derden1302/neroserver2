@@ -2,7 +2,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from djangoproject.views import import AddNewGadget, LoadGadgetApiInfo,LoadLineGraphic,LoadGadgetFolder, LoadUploadingFolder,LoadUploadingApiInfo, AddNewUploanding
+from .views import AddNewGadget, LoadGadgetApiInfo,LoadLineGraphic,LoadGadgetFolder, LoadUploadingFolder,LoadUploadingApiInfo, AddNewUploanding
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title="DEMO")
 

@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer
+from .serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer
 from .models import Gusers, Gadgets, Uploading, Indata
 import uuid as id
 from datetime import datetime, timedelta
