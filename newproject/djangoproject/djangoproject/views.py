@@ -1,19 +1,13 @@
-from django.shortcuts import render
-from django.urls import include, re_path
-from rest_framework_swagger.views import get_swagger_view
+import datetime as datetime
+from django.db.models import Avg
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer,  UploadingFolderSerialazer
-from rest_framework import generics, viewsets, request, status
-from .models import Gusers, Gadgets, Uploading,Indata
-from djangoproject import newGadjets
-import datetime as datetime
-from django.db.models import Avg
+from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer
+from .models import Gusers, Gadgets, Uploading, Indata
 import uuid as id
-from datetime import datetime, timedelta, time
-import json
+from datetime import datetime, timedelta
 
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
@@ -24,6 +18,7 @@ class AddNewGadget(APIView):
                                  device_type=request.data['device_type'], id=id.uuid4())
         return Response(status=200)
 class LoadGadgetApiInfo(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         idSr = request.GET.get('id')
         requestF = Gadgets.objects.get(id=idSr)
@@ -43,6 +38,7 @@ class AutenficationAPI(APIView):
 periodD = { 1 : 60, 2 : 30, 3:1440}
 rangeD={24 : 1 ,3 : 3,7 : 7}
 class LoadLineGraphic(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer =  ResponseGraphicSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
