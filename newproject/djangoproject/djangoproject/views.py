@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-        Gusers.objects.create(title=request.data['title'],
+        Gadgets.objects.create(title=request.data['title'],
                                  folder=request.data['folder'],
                                  MAC = request.data['MAC'],
                                  device_type=request.data['device_type'], id=id.uuid4())
