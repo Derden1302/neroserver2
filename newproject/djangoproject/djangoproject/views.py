@@ -8,7 +8,6 @@ from .serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseAp
 from .models import Gusers, Gadgets, Uploading, Indata
 import uuid as id
 from datetime import datetime, timedelta
-
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
@@ -35,7 +34,6 @@ class AutenficationAPI(APIView):
             'auth': str(request.auth),  # None
         }
         return Response(content)
-
 periodD = { 1 : 60, 2 : 30, 3:1440}
 rangeD={24 : 1 ,3 : 3,7 : 7}
 class LoadLineGraphic(APIView):
@@ -70,7 +68,6 @@ class LoadLineGraphic(APIView):
                 WATTarrV.extend((requestC.aggregate(Avg('voltage')).values()))
                 #ResponseGrafic = a*b
         if type == 'WATT':
-            print(WATTarrA, "\n 222", WATTarrV)
             for i in range(0,len( WATTarrV)):
                 if WATTarrV[i]!=None or WATTarrA[i]!=None:
                     ResponseGrafic.append(WATTarrV[i]*WATTarrA[i])
@@ -79,7 +76,6 @@ class LoadLineGraphic(APIView):
     def serrialize(self, title):
 
         return
-
 class LoadGadgetFolder(APIView):
     permission_classes = [IsAuthenticated]
     def get (self, request):
@@ -111,5 +107,4 @@ class AddNewUploanding(APIView):
         range = request.data['range'],
         period = request.data['period'],id =id.uuid4())
         return Response(status=200)
-
 
