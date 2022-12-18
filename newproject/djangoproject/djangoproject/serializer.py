@@ -64,6 +64,7 @@ class UploadingSerialazer(serializers.ModelSerializer):
 class UploadingFolderSerialazer(serializers.ModelSerializer):
     class Meta:
         model = Uploading
+        fields = ('id', 'title', 'type')
 
 
 
