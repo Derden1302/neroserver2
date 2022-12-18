@@ -8,6 +8,7 @@ from .serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseAp
 from .models import Gusers, Gadgets, Uploading, Indata
 import uuid as id
 from datetime import datetime, timedelta
+
 class AddNewGadget(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
@@ -37,7 +38,7 @@ class AutenficationAPI(APIView):
 periodD = { 1 : 60, 2 : 30, 3:1440}
 rangeD={24 : 1 ,3 : 3,7 : 7}
 class LoadLineGraphic(APIView):
-
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer =  ResponseGraphicSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -97,15 +98,14 @@ class LoadUploadingFolder(APIView):
 class AddNewUploanding(APIView):
     permission_classes = [IsAuthenticated]
     def post (self,request):
-        serializer = ResponseApiNewSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         Uploading.objects.create(folder = request.data['folder'],
         title = request.data['title'],
         type_values = request.data['type_values'],
         devices_in_unloading = request.data['devices_in_unloading'],
         type_of_unloading = request.data['type_of_unloading'],
         range = request.data['range'],
-        period = request.data['period'],id =id.uuid4())
+        period = request.data['period'],
+                                 type =request.data['type'], id =id.uuid4())
         return Response(status=200)
 
 
