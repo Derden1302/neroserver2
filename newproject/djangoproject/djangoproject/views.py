@@ -37,7 +37,7 @@ class AutenficationAPI(APIView):
 periodD = { 1 : 60, 2 : 30, 3:1440}
 rangeD={24 : 1 ,3 : 3,7 : 7}
 class LoadLineGraphic(APIView):
-    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         serializer =  ResponseGraphicSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -85,7 +85,7 @@ class LoadGadgetFolder(APIView):
 class LoadUploadingApiInfo(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        idSr = request.data.get('id')
+        idSr = request.GET.get('id')
         requestF = Uploading.objects.get(id=idSr)
         return Response(UploadingSerialazer(requestF, many=False).data)
 class LoadUploadingFolder(APIView):
@@ -107,4 +107,5 @@ class AddNewUploanding(APIView):
         range = request.data['range'],
         period = request.data['period'],id =id.uuid4())
         return Response(status=200)
+
 
