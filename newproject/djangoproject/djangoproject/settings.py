@@ -27,10 +27,9 @@ DEBUG = True
 
 SECURE_SSL_REDIRECT = True
 
-ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1","79.137.206.187","aspas.tech"]
+ALLOWED_HOSTS = ["aspas.tech"]
 # Application definition
 INSTALLED_APPS = [
-'corsheaders',
     'rest_framework',
     'rest_framework_swagger',
     'django.contrib.admin',
@@ -40,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangoproject.apps.djangoprojectConfig',
-    'django.extensions'
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -166,25 +165,3 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-CORS_ALLOWED_ORIGINS = [
-"https://domain.com",
-"https://api.domain.com",
-"http://localhost:8080",
-"http://127.0.0.1:9000",
-"http://79.137.206.187:8080",
-"http://79.137.206.187:80",
-"http://79.137.206.187",
-"https://nerotexai.xyz",
-"http://nerotexai.xyz"
-]
-CORS_ALLOW_METHODS = [
-'GET',
-'POST'
-]
-CORS_ALLOW_HEADERS = [
-    'Authorization',
-'accept',
-'accept-encoding',
-'authorization',
-'content-type'
-]
