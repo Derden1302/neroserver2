@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-lf01#53kj9##3zh!ri1od1iz0lang8$*lx2s7nss!&!@8e*3dl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1"]
+SECURE_SSL_REDIRECT = True
+
+ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1","79.137.206.187","aspas.tech"]
 # Application definition
 INSTALLED_APPS = [
 'corsheaders',
@@ -37,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangoproject.apps.djangoprojectConfig'
+    'djangoproject.apps.djangoprojectConfig',
+    'django.extensions'
 ]
 
 MIDDLEWARE = [
@@ -167,7 +170,12 @@ CORS_ALLOWED_ORIGINS = [
 "https://domain.com",
 "https://api.domain.com",
 "http://localhost:8080",
-"http://127.0.0.1:9000"
+"http://127.0.0.1:9000",
+"http://79.137.206.187:8080",
+"http://79.137.206.187:80",
+"http://79.137.206.187",
+"https://nerotexai.xyz",
+"http://nerotexai.xyz"
 ]
 CORS_ALLOW_METHODS = [
 'GET',
