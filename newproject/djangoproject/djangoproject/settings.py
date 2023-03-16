@@ -11,7 +11,6 @@ For the full list of settings and their values, see
 from django.urls import path, include
 from datetime import timedelta
 from pathlib import Path
-import os
 import rest_framework_swagger
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +25,9 @@ SECRET_KEY = 'django-insecure-lf01#53kj9##3zh!ri1od1iz0lang8$*lx2s7nss!&!@8e*3dl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1","aspas.tech","pconapi.ru"]
+SECURE_SSL_REDIRECT = True
+
+ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1","79.137.206.187","aspas.tech"]
 # Application definition
 INSTALLED_APPS = [
 'corsheaders',
@@ -38,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangoproject.apps.djangoprojectConfig'
+    'djangoproject.apps.djangoprojectConfig',
+    'django.extensions'
 ]
 
 MIDDLEWARE = [
@@ -122,8 +124,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
@@ -170,7 +171,11 @@ CORS_ALLOWED_ORIGINS = [
 "https://api.domain.com",
 "http://localhost:8080",
 "http://127.0.0.1:9000",
-"https://nerotexai.xyz"
+"http://79.137.206.187:8080",
+"http://79.137.206.187:80",
+"http://79.137.206.187",
+"https://nerotexai.xyz",
+"http://nerotexai.xyz"
 ]
 CORS_ALLOW_METHODS = [
 'GET',

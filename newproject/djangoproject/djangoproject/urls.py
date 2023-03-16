@@ -22,4 +22,6 @@ urlpatterns = [
     path('signin/', TokenObtainPairView.as_view(), name='token_obtain_pair'),   ###
     path('getAccessToken/', TokenRefreshView.as_view(), name='token_refresh'),  ###
     path("logout/", LogoutView.as_view(), name="logout")
+
+    path('hub/upload')
 ]

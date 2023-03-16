@@ -1,6 +1,15 @@
-import uuid
-
 from django.db import models
+
+
+class Actions(models.Model):
+    id = models.UUIDField(primary_key=True)
+    type = models.CharField(max_length=40, blank=True, null=True)
+    title = models.CharField(max_length=40, blank=True, null=True)
+    data = models.TextField(blank=True, null=True)  # This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'actions'
 
 
 class AuthGroup(models.Model):
@@ -118,15 +127,11 @@ class DjangoSession(models.Model):
 
 
 class Gadgets(models.Model):
-    id = models.CharField(primary_key=True, max_length=14)
-    folder = models.CharField(max_length=14, blank=True, null=True)
-    title = models.TextField(blank=True, null=True)
-    gadjets = models.TextField(blank=True, null=True)
-    mac = models.TextField(blank=True, null=True)
-    device_type = models.TextField(blank=True, null=True)
-    last_event = models.TextField(blank=True, null=True)
-    functions = models.TextField(blank=True, null=True)  # This field type is a guess.
-    device_script = models.TextField(blank=True, null=True)
+    id = models.UUIDField(primary_key=True)
+    status = models.BooleanField(blank=True, null=True)
+    folder = models.UUIDField(blank=True, null=True)
+    title = models.CharField(max_length=30, blank=True, null=True)
+    mac = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
         managed = False
@@ -134,13 +139,10 @@ class Gadgets(models.Model):
 
 
 class Gusers(models.Model):
-    userid = models.AutoField(primary_key=True)
-    password = models.TextField()
-    email = models.TextField(blank=True, null=True)
-    phone_numper = models.TextField(blank=True, null=True)
-    pcon_count = models.IntegerField()
-    username = models.TextField(blank=True, null=True)
-    pass_field = models.TextField(db_column='pass', blank=True, null=True)  # Field renamed because it was a Python reserved word.
+    userid = models.UUIDField(primary_key=True)
+    password = models.CharField(max_length=30)
+    phone_numper = models.CharField(max_length=30, blank=True, null=True)
+    username = models.CharField(max_length=40, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -148,15 +150,13 @@ class Gusers(models.Model):
 
 
 class Indata(models.Model):
-    voltage = models.FloatField(blank=True, null=True)
-    amperage = models.FloatField(blank=True, null=True)
-    systematwork = models.BooleanField(blank=True, null=True)
-    systemerror = models.IntegerField(blank=True, null=True)
-    switchinfo = models.BooleanField(blank=True, null=True)
-    time_zone = models.DateTimeField(blank=True, null=True)
-    taskid = models.AutoField(primary_key=True)
-    userid = models.IntegerField(blank=True, null=True)
-    pconid = models.ForeignKey(Gadgets, models.DO_NOTHING, db_column='pconid', blank=True, null=True)
+    taskid = models.BigIntegerField(primary_key=True)
+    id = models.ForeignKey(Gadgets, models.DO_NOTHING, db_column='id')
+    voltage = models.FloatField()
+    amperage = models.FloatField()
+    times = models.TextField(db_column='timeS')  # Field name made lowercase. This field type is a guess.
+    indelete = models.BooleanField(db_column='inDelete')  # Field name made lowercase.
+    anomaly = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -179,9 +179,12 @@ class IndataEvent(models.Model):
 
 
 class Notifications(models.Model):
+    id = models.UUIDField(primary_key=True)
     title = models.TextField(blank=True, null=True)
-    message = models.TextField(blank=True, null=True)  # This field type is a guess.
-    type_of_message = models.TextField(blank=True, null=True)  # This field type is a guess.
+    message = models.TextField(blank=True, null=True)
+    type = models.IntegerField()
+    status = models.BooleanField(blank=True, null=True)
+    parent = models.UUIDField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -212,22 +215,38 @@ class OutdataEvent(models.Model):
         db_table = 'outdata_event'
 
 
-class Uploading(models.Model):
-    title = models.TextField(blank=True, null=True)
-    scenarios = models.TextField(blank=True, null=True)  # This field type is a guess.
-    period = models.IntegerField(blank=True, null=True)
-    range = models.IntegerField(blank=True, null=True)
-    type_of_unloading = models.TextField(blank=True, null=True)
-    devices_in_progress = models.TextField(blank=True, null=True)  # This field type is a guess.
-    type_values = models.CharField(max_length=20, blank=True, null=True)
-    type = models.CharField(max_length=20, blank=True, null=True)
+class Scenarios(models.Model):
     id = models.UUIDField(primary_key=True)
     folder = models.UUIDField(blank=True, null=True)
+    status = models.BooleanField()
+    steps = models.ForeignKey('Steps', models.DO_NOTHING, db_column='steps', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'scenarios'
+
+
+class Steps(models.Model):
+    id = models.UUIDField(primary_key=True)
+    title = models.CharField(max_length=30, blank=True, null=True)
+    idgadgets = models.TextField(blank=True, null=True)  # This field type is a guess.
+    iduploading = models.ForeignKey('Uploading', models.DO_NOTHING, db_column='iduploading', blank=True, null=True)
+    actionstep = models.TextField(blank=True, null=True)  # This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'steps'
+
+
+class Uploading(models.Model):
+    delete_id = models.IntegerField(blank=True, null=True)
+    id = models.UUIDField(primary_key=True)
+    folder = models.UUIDField(blank=True, null=True)
+    range = models.IntegerField(blank=True, null=True)
+    period = models.IntegerField(blank=True, null=True)
+    type_of_values = models.CharField(max_length=4, blank=True, null=True)
+    type_of_uploading = models.CharField(max_length=6, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'uploading'
-
-
-
-
