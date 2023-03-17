@@ -23,6 +23,10 @@ class GadjetSerialazer(serializers.ModelSerializer):
         model = Gadgets
         fields = '__all__'
 
+class GadjetActiveSerialazer(serializers.ModelSerializer):
+    class Meta:
+        model = Gadgets
+        fields = ('id','status')
 
 class GadjetFolderSerialazer(serializers.ModelSerializer):
     class Meta:

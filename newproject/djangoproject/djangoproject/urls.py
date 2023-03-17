@@ -2,7 +2,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import AddNewGadget, LoadGadgetApiInfo,LoadLineGraphic,LoadGadgetFolder, LoadUploadingFolder,LoadUploadingApiInfo, AddNewUploanding
+from .views import AddNewGadget, LoadGadgetApiInfo,LoadLineGraphic,LoadGadgetFolder, LoadUploadingFolder,LoadUploadingApiInfo, AddNewUploanding, GadgetActiveChecker
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title="DEMO")
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path('gadget/GadgetInfo/', LoadGadgetApiInfo.as_view()), #get
     path('gadget/AddGadjet/', AddNewGadget.as_view()),
     path('gadget/GadgetFolder/', LoadGadgetFolder.as_view()), #get
+    path('gadget/IsActive', GadgetActiveChecker.as_view()), #get активен ли гаджет
 
     path('uploading/LoadGraphic/', LoadLineGraphic.as_view()),
     path('uploading/AddNewUploading/', AddNewUploanding.as_view()),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('signin/', TokenObtainPairView.as_view(), name='token_obtain_pair'),   ###
     path('getAccessToken/', TokenRefreshView.as_view(), name='token_refresh'),  ###
     path("logout/", LogoutView.as_view(), name="logout")
+
 ]

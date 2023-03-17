@@ -25,9 +25,11 @@ SECRET_KEY = 'django-insecure-lf01#53kj9##3zh!ri1od1iz0lang8$*lx2s7nss!&!@8e*3dl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SECURE_SSL_REDIRECT = True
 
-ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1","79.137.206.187","aspas.tech"]
+
+#SECURE_SSL_REDIRECT = True
+
+ALLOWED_HOSTS = ['51.250.65.217',"127.0.0.1","79.137.206.187","aspas.tech","localhost"]
 # Application definition
 INSTALLED_APPS = [
 'corsheaders',
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangoproject.apps.djangoprojectConfig',
-    'django.extensions'
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

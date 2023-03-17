@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer
+from .serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer, GadjetActiveSerialazer
 from .models import Gusers, Gadgets, Uploading, Indata
 import uuid as id
 from datetime import datetime, timedelta
@@ -107,5 +107,12 @@ class AddNewUploanding(APIView):
         period = request.data['period'],
                                  type =request.data['type'], id =id.uuid4())
         return Response(status=200)
+
+class GadgetActiveChecker(APIView):
+    #permission_classes = [IsAuthenticated]
+    def get(self,request):
+        idSr = request.GET.get('id')
+        requestF = Gadgets.objects.get(id=idSr)
+        return Response(GadjetActiveSerialazer(requestF, many=False).data) #возвращает только айди и статус
 
 
