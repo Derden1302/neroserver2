@@ -2,7 +2,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import AddNewGadget, LoadGadgetApiInfo,LoadLineGraphic,LoadGadgetFolder, LoadUploadingFolder,LoadUploadingApiInfo, AddNewUploanding, GadgetActiveChecker
+from .views import AddNewGadget, LoadGadgetApiInfo,LoadLineGraphic,LoadGadgetFolder, LoadUploadingFolder,LoadUploadingApiInfo, AddNewUploanding, GadgetActiveChecker, AddNewDataFromHub
 from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title="DEMO")
 
@@ -22,6 +22,6 @@ urlpatterns = [
 
     path('signin/', TokenObtainPairView.as_view(), name='token_obtain_pair'),   ###
     path('getAccessToken/', TokenRefreshView.as_view(), name='token_refresh'),  ###
-    path("logout/", LogoutView.as_view(), name="logout")
-
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path('getIndataFromHub/', AddNewDataFromHub.as_view())
 ]

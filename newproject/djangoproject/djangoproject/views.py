@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer, GadjetActiveSerialazer
-from .models import Gusers, Gadgets, Uploading, Indata
+from djangoproject.serializer import  GadjetSerialazer, ResponseGraphicSerializer, ResponseApiNewSerializer, GadjetFolderSerialazer, UploadingSerialazer, UploadingFolderSerialazer, GadjetActiveSerialazer
+from djangoproject.models import Gusers, Gadgets, Uploading, Indata
 import uuid as id
 from datetime import datetime, timedelta
 
@@ -114,5 +114,16 @@ class GadgetActiveChecker(APIView):
         idSr = request.GET.get('id')
         requestF = Gadgets.objects.get(id=idSr)
         return Response(GadjetActiveSerialazer(requestF, many=False).data) #возвращает только айди и статус
+
+class AddNewDataFromHub(APIView):
+    def put(self, request):
+        Indata.objects.create(
+            id=request.data['id'], taskid=request.data['taskid'],
+                              voltage=request.data['voltage'],
+                               times=request.data['timeS'],
+                              amperage=request.data['amperage'],
+                              inDelete=request.data['inDelete'],
+                               anomaly=request.data['anomaly'])
+        return Response(status=200)
 
 
