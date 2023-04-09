@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" overwriteAll="false" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
-    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
+  <component name="PublishConfigData" autoUpload="Always" serverName="timuradmin@51.250.65.217:22 password" overwriteAll="false" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="timuradmin@51.250.65.217:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/API" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
